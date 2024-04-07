@@ -85,7 +85,7 @@ app_ui = ui.page_fillable(
         )),
     ui.card(
         ui.card_header("Selection"),
-        # ui.download_button("download_file", "Download Selection"),
+        ui.download_button("download_file", "Download Selection"),
         ui.output_text_verbatim("txt"),
     ))
 
