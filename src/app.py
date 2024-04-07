@@ -1,4 +1,7 @@
 from shiny import ui, render, App
+# import backend
+import asyncio
+from datetime import date
 
 # define UI layout
 app_ui = ui.page_fillable(
@@ -81,16 +84,24 @@ app_ui = ui.page_fillable(
         )),
     ui.card(
         ui.card_header("Selection"),
-        ui.output_text_verbatim("txt")))
+        ui.download_button("download_file", "Download Selection")
+    ))
 
 
 def server(input, output, session):
     @output
-    @render.text
-    def txt():
-        result = f"Selection: Frame - {input.frame()}, Size - {input.size()}, \
-        Motors - {input.motor()}, Stack - {input.stack()}, VTX - {input.vtx()}"
-        return result
+    @render.download(
+        filename=lambda: f"betaflight-configuration-{date.today().isoformat()}.txt"
+    )
+    # todo: implement more robust data handling
+    async def download_file():
+        await asyncio.sleep(0.25)
+        yield "Results:"
+        yield f"Frame: {input.frame()}\n"
+        yield f"Size: {input.size()}\n"
+        yield f"Motors: {input.motor()}\n"
+        yield f"Stack: {input.stack()}\n"
+        yield f"VTX - {input.vtx()}\n"
 
 
 # entry point
