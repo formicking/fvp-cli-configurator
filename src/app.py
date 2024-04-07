@@ -2,6 +2,7 @@ from shiny import ui, render, App
 # import backend
 import asyncio
 from datetime import date
+import backend
 
 # define UI layout
 app_ui = ui.page_fillable(
@@ -84,7 +85,8 @@ app_ui = ui.page_fillable(
         )),
     ui.card(
         ui.card_header("Selection"),
-        ui.download_button("download_file", "Download Selection")
+        # ui.download_button("download_file", "Download Selection"),
+        ui.output_text_verbatim("txt"),
     ))
 
 
@@ -102,6 +104,12 @@ def server(input, output, session):
         yield f"Motors: {input.motor()}\n"
         yield f"Stack: {input.stack()}\n"
         yield f"VTX - {input.vtx()}\n"
+
+    @output
+    @render.text
+    def txt():
+        filename = "betaflight/presets/vtx/akk/fx2_dominator.txt"
+        return backend.read_file(filename)
 
 
 # entry point
