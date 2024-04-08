@@ -97,6 +97,7 @@ def server(input, output, session):
     @render.download(
         filename=lambda: f"betaflight-configuration-{date.today().isoformat()}.txt"
     )
+
     # todo: implement more robust data handling
     async def download_file():
         await asyncio.sleep(0.25)
