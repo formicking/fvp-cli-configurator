@@ -3,24 +3,55 @@
 import asyncio
 from datetime import date
 from shiny import App, render, reactive, ui
+
+# from shiny import App, reactive
+# from shiny.express import input, ui
 import backend
 
+MOTOR_CHOICES = {
+    "S": {
+        "fh2807": "Flashhobby 2807 1300KV",
+        "em2807": "Emax Eco II 2807 1300KV",
+        "tm2806": "T-Motor F90 2806.5 1300KV",
+    },
+    "M": {"bh2810": "Brotherhobby Avenger 2810 900KV"},
+    "L": {
+        "xc3110": "XING2 Cinelifter 3110 1250KV",
+        "bh3212": "BrotherHobby Special Edition V4 32.5 12 950KV",
+    },
+}
+
+FRAME_CHOICES = {
+    "S": {
+        "apex_hd": "Apex HD",
+        "source_one": "Source One",
+        "mark_4": "Mark 4",
+    },
+    "M": {
+        "apex_hd": "Apex HD",
+        "source_one": "Source One",
+        "mark_4": "Mark 4",
+    },
+    "L": {
+        "iflight_xl10": "iFlight Nazgul XL10 V6",
+        "axisflying_manta": "Axisflying MANTA10 Lite",
+    },
+}
 # define UI layout
 app_ui = ui.page_fillable(
     ui.card(
         ui.card_header("FPV Drone Configurator"),
         ui.layout_sidebar(
             ui.panel_sidebar(
+                ui.input_radio_buttons(
+                    id="size",
+                    label="Select Frame size (This will impact available options below)",
+                    choices={"S": "7 inch", "M": "8 inch", "L": "10 inch"},
+                ),
                 ui.input_select(
                     id="frame",
                     label="Select Frame type:",
-                    choices={
-                        "apex_hd": "Apex HD",
-                        "source_one": "Source One",
-                        "iflight_xl10": "iFlight Nazgul XL10 V6",
-                        "axisflying_manta": "Axisflying MANTA10 Lite",
-                        "mark_4": "Mark 4",
-                    },
+                    choices={},
                 ),
                 ui.input_select(
                     id="stack",
@@ -36,14 +67,7 @@ app_ui = ui.page_fillable(
                 ui.input_select(
                     id="motor",
                     label="Select Motors type:",
-                    choices={
-                        "bh2810": "Brotherhobby Avenger 2810 900KV",
-                        "fh2807": "Flashhobby 2807 1300KV",
-                        "em2807": "Emax Eco II 2807 1300KV",
-                        "tm2806": "T-Motor F90 2806.5 1300KV",
-                        "xc3110": "XING2 Cinelifter 3110 1250KV",
-                        "bh3212": "BrotherHobby Special Edition V4 32.5 12 950KV",
-                    },
+                    choices={},
                 ),
                 ui.input_select(
                     id="vtx",
@@ -61,11 +85,6 @@ app_ui = ui.page_fillable(
                         "gmp40": "GEPRC Maten Pro 2.5W 40CH 5.8G",
                         "blw40": "BLITZ Whoop 2.5W 40CH 5.8G",
                     },
-                ),
-                ui.input_radio_buttons(
-                    id="size",
-                    label="Select Frame size",
-                    choices={"S": "7", "M": "8", "L": "10"},
                 ),
             ),
             ui.p("Advanced settings:"),
@@ -99,6 +118,11 @@ app_ui = ui.page_fillable(
 
 def server(input, output, session):
     """Shiny server function for connecting user input with backend logic"""
+
+    @reactive.effect
+    def _():
+        ui.update_select("motor", choices=MOTOR_CHOICES[input.size()])
+        ui.update_select("frame", choices=FRAME_CHOICES[input.size()])
 
     @output
     @render.download(
