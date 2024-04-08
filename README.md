@@ -18,7 +18,7 @@ This is helper app for me and fellow FPV-builders
 3. Activate virtual environment - `source development/bin/activate`
 4. Install requirements - `pip install -r src/requirements-dev.txt`
 5. *Optionally:* Install [Shiny](https://marketplace.visualstudio.com/items?itemName=Posit.shiny-python) extension *(if you use VS Code)*. You could just execute this command `python3 -m shiny run --port 59333 --reload --autoreload-port 59334 src/app.py` for running app locally on `http://127.0.0.1:59333/`
-6. Once code changes are made and tested, convert site to static using shinylive: `shinylive export src/ docs`
+6. Once code changes are made and tested, convert site to static using shinylive: `rm -r docs & shinylive export src/ docs`
 7. Run the server: `python3 -m http.server --directory docs --bind localhost 8008` and test changes on `http://127.0.0.1:8008/`
 8. Validate if changes formatted properly before comitting:
 

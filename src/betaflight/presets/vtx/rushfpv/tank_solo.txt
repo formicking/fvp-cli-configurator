@@ -1,4 +1,4 @@
-### Rush Max Solo 2.5W 48CH 5.8G SmartAudio ###
+### Rush Tank Solo 1.6W 48CH 5.8G SmartAudio ###
 # vtxtable
 vtxtable bands 6
 vtxtable channels 8
@@ -9,5 +9,5 @@ vtxtable band 4 AIRWAVE  F CUSTOM  5740 5760 5780 5800 5820 5840 5860 5880
 vtxtable band 5 RACEBAND R CUSTOM  5658 5695 5732 5769 5806 5843 5880 5917
 vtxtable band 6 LOWRACE  L CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
 vtxtable powerlevels 4
-vtxtable powervalues 14 27 30 34
-vtxtable powerlabels 25 500 1 2.5
+vtxtable powervalues 14 26 29 32
+vtxtable powerlabels 25 400 800 MAX
