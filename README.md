@@ -2,13 +2,13 @@
 
 This is helper app for me and fellow FPV-builders
 
-# Folder Structure
+## Folder Structure
 
     - **betaflight** - Folder for all Betaflight Configurator presets that could be used with our drones
     - **src** - Folder for python configurator app
     - **docs** Folder for published static site
 
-# For contributors
+## For contributors
 
 > Disklaimer: This was done on Ubuntu installed on WSL, might reqired extra steps on other environments
 
