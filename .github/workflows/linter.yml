@@ -1,0 +1,27 @@
+# Run validation to prevent unformatter or unsecure code to be merged into main
+on:
+  pull_request:
+    branches: ["development", "main"]
+  # allows manual trigger
+  workflow_dispatch:
+jobs:
+  validate-python:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run python security check
+        uses: mdegis/bandit-action@v1.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: "scr/"
+          level: high
+          confidence: high
+          exit_zero: true
+
+      - name: Run python linters
+        uses: ricardochaves/python-lint@v1.4.0
+        with:
+          python-root-list: src/
