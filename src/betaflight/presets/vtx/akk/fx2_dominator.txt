@@ -1,3 +1,4 @@
+### AKK FX2 Dominator 2W 40CH 5.8G SmartAudio ###
 vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
