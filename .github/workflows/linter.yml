@@ -1,0 +1,37 @@
+# Run validation to prevent unformatter or unsecure code to be merged into main
+on:
+  pull_request:
+    branches: ["development", "main"]
+  # allows manual trigger
+  workflow_dispatch:
+jobs:
+  run-linters:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run python security check
+        uses: mdegis/bandit-action@v1.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: "scr/"
+          level: high
+          confidence: high
+          exit_zero: true
+
+      - name: Run python linters
+        uses: ricardochaves/python-lint@v1.4.0
+        with:
+          python-root-list: src/
+          use-pycodestyle: false
+          use-flake8: false
+          use-mypy: false
+          use-isort: false
+          extra-pylint-options: "--disable=E0401,W0511,W0612,W0613,W0622"
+
+      - name: Run markdown linter
+        uses: articulate/actions-markdownlint@v1
+        with:
+          config: .markdownlint.json
