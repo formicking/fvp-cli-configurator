@@ -1,7 +1,8 @@
-from shiny import ui, render, App
-# import backend
+"""Web application with UI layout for configurator app."""
+
 import asyncio
 from datetime import date
+from shiny import ui, render, App
 import backend
 
 # define UI layout
@@ -90,7 +91,8 @@ app_ui = ui.page_fillable(
     ))
 
 
-def server(input, output, session):
+def server(input, output):
+    """Shiny server function for connecting user input with backend logic"""
     @output
     @render.download(
         filename=lambda: f"betaflight-configuration-{date.today().isoformat()}.txt"

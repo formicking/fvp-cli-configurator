@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      
+      - name: Install app dependencies
+        run: pip install -r requirements.txt
+        working-directory: src/
 
       - name: Run python security check
         uses: mdegis/bandit-action@v1.0
@@ -25,3 +29,4 @@ jobs:
         uses: ricardochaves/python-lint@v1.4.0
         with:
           python-root-list: src/
+          extra-pylint-options: "--disable=W0511,W0622"
