@@ -2,7 +2,7 @@
 
 import asyncio
 from datetime import date
-from shiny import ui, render, App
+from shiny import App, render, ui
 import backend
 
 # define UI layout
@@ -19,16 +19,20 @@ app_ui = ui.page_fillable(
                         "source_one": "Source One",
                         "iflight_xl10": "iFlight Nazgul XL10 V6",
                         "axisflying_manta": "Axisflying MANTA10 Lite",
-                        "mark_4": "Mark 4"}),
+                        "mark_4": "Mark 4",
+                    },
+                ),
                 ui.input_select(
                     id="stack",
                     label="Select Stack type:",
                     choices={
                         "F403": "SpeedyBee F403",
-                                "F404": "SpeedyBee F404",
-                                "galychyna": "Galychyna",
-                                "vyriy": "Vyriy Drone + Q656 ESC",
-                                "F722": "Diatone mamba F722"}),
+                        "F404": "SpeedyBee F404",
+                        "galychyna": "Galychyna",
+                        "vyriy": "Vyriy Drone + Q656 ESC",
+                        "F722": "Diatone mamba F722",
+                    },
+                ),
                 ui.input_select(
                     id="motor",
                     label="Select Motors type:",
@@ -37,7 +41,9 @@ app_ui = ui.page_fillable(
                         "F2807": "Flashhobby 2807 1300KV",
                         "E2807": "Emax 2807 1300KV",
                         "X3110": "XING2 Cinelifter 3110 1250KV",
-                        "1E": "BrotherHobby Special Edition V4 32.5-12 950KV"}),
+                        "1E": "BrotherHobby Special Edition V4 32.5-12 950KV",
+                    },
+                ),
                 ui.input_select(
                     id="vtx",
                     label="Select VTX type:",
@@ -46,53 +52,41 @@ app_ui = ui.page_fillable(
                         "1B": "Foxeer Reaper, 2.5Wt, 40Ch",
                         "1C": "Foxer Infinity 5W",
                         "1D": "RushFPV MaxSolo, 2.5W",
-                        "1E": "ReadyToSky(LTS) 3W"}),
+                        "1E": "ReadyToSky(LTS) 3W",
+                    },
+                ),
                 ui.input_radio_buttons(
                     id="size",
                     label="Select Frame size",
-                    choices={
-                        "1A": "7",
-                        "1B": "8",
-                        "1C": "10"}),
+                    choices={"1A": "7", "1B": "8", "1C": "10"},
+                ),
             ),
             ui.p("Advanced settings:"),
-            ui.input_checkbox(
-                id="set_pids",
-                label="Set PIDs?"),
-            ui.input_checkbox(
-                id="set_biper",
-                label="Set biper on failsafe?"),
-            ui.input_checkbox(
-                id="set_filters",
-                label="Set Filters?"),
-            ui.input_checkbox(
-                id="set_osd",
-                label="Set OSD?"),
-            ui.input_checkbox(
-                id="enable_servo",
-                label="Enable Servo?"),
-            ui.input_checkbox(
-                id="set_vtx_power",
-                label="Set VTX Power on switch?"),
-            ui.input_checkbox(
-                id="enable_pit_mode",
-                label="Enable PIT mode?"),
+            ui.input_checkbox(id="set_pids", label="Set PIDs?"),
+            ui.input_checkbox(id="set_biper", label="Set biper on failsafe?"),
+            ui.input_checkbox(id="set_filters", label="Set Filters?"),
+            ui.input_checkbox(id="set_osd", label="Set OSD?"),
+            ui.input_checkbox(id="enable_servo", label="Enable Servo?"),
+            ui.input_checkbox(id="set_vtx_power", label="Set VTX Power on switch?"),
+            ui.input_checkbox(id="enable_pit_mode", label="Enable PIT mode?"),
             ui.input_select(
                 id="rx_uart",
                 label="Set RX UART:",
-                choices={
-                    "2": "UART 2",
-                    "6": "UART 6"}),
-        )),
+                choices={"2": "UART 2", "6": "UART 6"},
+            ),
+        ),
+    ),
     ui.card(
         ui.card_header("Selection"),
         ui.download_button("download_file", "Download Selection"),
         ui.output_text_verbatim("txt"),
-    ))
+    ),
+)
 
 
 def server(input, output):
     """Shiny server function for connecting user input with backend logic"""
+
     @output
     @render.download(
         filename=lambda: f"betaflight-configuration-{date.today().isoformat()}.txt"
