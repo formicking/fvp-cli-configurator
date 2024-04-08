@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-with open(Path(__file__).parent / "part_mapping.json", "r") as f:
+with open(Path(__file__).parent / "part_mapping.json", "r", encoding="utf-8") as f:
     part_mapping = json.load(f)
 
 
