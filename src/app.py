@@ -2,7 +2,7 @@
 
 import asyncio
 from datetime import date
-from shiny import App, render, ui
+from shiny import App, render, reactive, ui
 import backend
 
 # define UI layout
@@ -58,7 +58,7 @@ app_ui = ui.page_fillable(
                 ui.input_radio_buttons(
                     id="size",
                     label="Select Frame size",
-                    choices={"1A": "7", "1B": "8", "1C": "10"},
+                    choices={"S": "7", "M": "8", "L": "10"},
                 ),
             ),
             ui.p("Advanced settings:"),
@@ -67,6 +67,11 @@ app_ui = ui.page_fillable(
             ui.input_checkbox(id="set_filters", label="Set Filters?"),
             ui.input_checkbox(id="set_osd", label="Set OSD?"),
             ui.input_checkbox(id="enable_servo", label="Enable Servo?"),
+            ui.input_select(
+                id="servo_motor_pad",
+                label="Set Servo Pad:",
+                choices={"S9": "S9", "M8": "M8", "M5": "M5"},
+            ),
             ui.input_checkbox(id="set_vtx_power", label="Set VTX Power on switch?"),
             ui.input_checkbox(id="enable_pit_mode", label="Enable PIT mode?"),
             ui.input_select(
@@ -78,13 +83,14 @@ app_ui = ui.page_fillable(
     ),
     ui.card(
         ui.card_header("Selection"),
-        ui.download_button("download_file", "Download Selection"),
-        ui.output_text_verbatim("txt"),
+        ui.download_button("download_file", "Download Selected Properties"),
+        ui.input_action_button("action_button", "Show/Hide Configuration"),
+        ui.output_text_verbatim("configuration"),
     ),
 )
 
 
-def server(input, output):
+def server(input, output, session):
     """Shiny server function for connecting user input with backend logic"""
 
     @output
@@ -100,13 +106,26 @@ def server(input, output):
         yield f"Motors: {input.motor()}\n"
         yield f"Stack: {input.stack()}\n"
         yield f"VTX - {input.vtx()}\n"
+        yield "Advanced configuration:\n"
+        yield f"Set filters - {input.set_filters()}\n"
+        yield f"Set pids - {input.set_pids()}\n"
+        yield f"Set beeper - {input.set_biper()}\n"
+        yield f"Set OSD settings - {input.set_osd()}\n"
+        yield f"Enable Servo motor - {input.enable_servo()}\n"
+        if input.enable_servo() != "False":
+            yield f"Servo motor pad - {input.servo_motor_pad()}\n"
+        yield f"Set VTX power on switch - {input.set_vtx_power()}\n"
+        yield f"Set VTX pit mode before arm - {input.enable_pit_mode()}\n"
 
     @output
-    @render.text
-    def txt():
-        filename = "betaflight/presets/vtx/akk/fx2_dominator.txt"
-        return backend.read_file(filename)
+    @render.text()
+    @reactive.event(input.action_button)
+    def configuration():
+        # Show/Hide text based on amount of clicks
+        if input.action_button() % 2 == 1:
+            return backend.parse_input(input)
+        return ""
 
 
-# entry point
+# app entry point
 app = App(ui=app_ui, server=server)

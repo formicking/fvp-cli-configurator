@@ -9,5 +9,7 @@ def read_file(filename):
 
 
 def parse_input(user_input):
-    """Function for parsing user input from UI"""
-    print(user_input)
+    """Function for parsing user input from UI
+    user_input containse user settings selected on frontend"""
+    print(user_input.set_vtx_power())
+    return read_file("betaflight/presets/vtx/akk/fx2_dominator.txt")
