@@ -5,7 +5,7 @@ from datetime import date
 from shiny import App, render, reactive, ui
 import backend
 from ui_layout import *
-import pyperclip
+
 
 # define UI layout
 app_ui = ui.page_fillable(
@@ -77,7 +77,7 @@ def server(input, output, session):
     @reactive.event(input.copy_results)
     def copy_results():
         print(ui.output_text_verbatim("selection_results").get_html_string)
-        pyperclip.copy("TEST")
+        # pyperclip.copy("TEST")
 
 
 # app entry point

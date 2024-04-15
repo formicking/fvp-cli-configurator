@@ -29,8 +29,17 @@ def parse_input(user_input):
         Advanced settings: {user_input.additional_settings()}\n \
         Betaflight version: {ui_layout.BETAFLIGHT_VERSION_CHOICES[user_input.betaflight_version()]}\n \
         DSHOT configuration: {user_input.dshot()}\n \
-        RX UART: {user_input.rx_uart()}\n \
-        OSD Style: {ui_layout.BETAFLIGH_CONFIGURATOR_CHOICES[user_input.betaflight_version()]["OSD_CHOICES"][user_input.osd_options()]}\n"
+        RX UART: {user_input.rx_uart()}\n"
+    # todo: fix issue with OSD choice
+    # results += (
+    #     "OSD Style: "
+    #     + {
+    #         ui_layout.BETAFLIGH_CONFIGURATOR_CHOICES[user_input.betaflight_version()][
+    #             "OSD_CHOICES"
+    #         ][user_input.osd_options()]
+    #     }
+    #     + "\n"
+    # )
 
     if "drop_servo" in (user_input.servo_settings()):
         results += f"Drop servo motor on pad {user_input.drop_servo_pad()}\n"
@@ -54,13 +63,12 @@ def set_vtx_power(user_input):
             -1
         ]
         return f"# vtx power level on switch\nvtx 0 2 0 0 1 900 1100\nvtx 1 2 0 0 3 1400 1600\nvtx 3 2 0 0 {max_level} 2000 2100\n\n"
-    else:
-        return "\n"
+
+    return "\n"
 
 
 def set_pit_mode(user_input):
     """Function for setting VTX to PIT mod to prevent overheating during tests"""
     if "enable_pit_mode" in user_input.vtx_settings():
         return "# enable PIT mode\nset vtx_low_power_disarm = UNTIL_FIRST_ARM\n\n"
-    else:
-        return "\n"
+    return "\n"

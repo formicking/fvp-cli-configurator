@@ -1,3 +1,5 @@
+"""Defines UI layout"""
+
 from shiny import ui
 
 # Icons
@@ -139,7 +141,8 @@ card_inputs = ui.card(
             4,
             ui.tooltip(
                 ui.span(tooltip_icon, " Servo motor settings:"),
-                "Select one or more servomotors and corresponding pads depending on your setup. In most cases these applicable for bombers",
+                "Select one or more servomotors and corresponding pads depending on your setup. \
+                    In most cases these applicable for bombers",
                 placement="right",
             ),
             ui.input_checkbox_group(
@@ -216,7 +219,8 @@ card_inputs = ui.card(
             4,
             ui.tooltip(
                 ui.span(tooltip_icon, " Betaflight version:"),
-                "Firmware version migh be not compatible with provided presets, e.g VD OSD settings. I did my best to prevent tool from misconfiguration just raise Github issue if you find some errors",
+                "Firmware version migh be not compatible with provided presets, e.g VD OSD settings. \
+                I did my best to prevent tool from misconfiguration just raise Github issue if you find some errors",
                 placement="right",
             ),
             ui.input_radio_buttons(
@@ -231,7 +235,8 @@ card_inputs = ui.card(
             4,
             ui.tooltip(
                 ui.span(tooltip_icon, " Stack settings:"),
-                "'Blackbox' migh not work properly at some stacks and should be used only if you need that. 'Apply default settings' will apply switch and adjustment ranges.",
+                "'Blackbox' migh not work properly at some stacks and should be used only if you need that. \
+                      'Apply default settings' will apply switch and adjustment ranges.",
                 placement="right",
             ),
             ui.input_checkbox_group(
@@ -259,7 +264,9 @@ card_inputs = ui.card(
             4,
             ui.tooltip(
                 ui.span(tooltip_icon, " VTX settings:"),
-                "VTX power on switch will allow pilot to set power level during the fly. PIT mode will keep the power on miminal value until drone Arm to prevent overheating. Migh be unavailable on some transmitters",
+                "VTX power on switch will allow pilot to set power level during the fly. \
+                PIT mode will keep the power on miminal value until drone Arm to prevent overheating. \
+                Migh be unavailable on some transmitters",
                 placement="right",
             ),
             ui.input_checkbox_group(
