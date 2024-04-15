@@ -7,6 +7,9 @@ import ui_layout
 with open(Path(__file__).parent / "part_mapping.json", "r", encoding="utf-8") as f:
     part_mapping = json.load(f)
 
+with open(Path(__file__).parent / "part_mapping.json", "r", encoding="utf-8") as f:
+    part_mapping = json.load(f)
+
 
 def read_file(filename):
     """Function for reading configuration files"""
