@@ -13,3 +13,9 @@ vtxtable band 8 BAND_U     CUSTOM  5325 5348 5366 5384 5402 5420 5438 5456
 vtxtable powerlevels 5
 vtxtable powervalues 25 100 200 400 600
 vtxtable powerlabels 25 200 500 1.5 2.5
+
+# vtx frequency
+set vtx_freq = 5806
+
+# vtx serial port for IRC Tramp
+serial 0 8192 115200 57600 0 115200

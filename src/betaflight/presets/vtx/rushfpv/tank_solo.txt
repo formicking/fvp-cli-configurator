@@ -11,3 +11,9 @@ vtxtable band 6 LOWRACE  L CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
 vtxtable powerlevels 4
 vtxtable powervalues 14 26 29 32
 vtxtable powerlabels 25 400 800 MAX
+
+# vtx frequency
+set vtx_freq = 5806
+
+# vtx serial port for SmartAudio
+serial 0 2048 115200 57600 0 115200

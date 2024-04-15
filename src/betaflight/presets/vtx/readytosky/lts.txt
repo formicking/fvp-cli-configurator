@@ -11,3 +11,9 @@ vtxtable band 6 BAND_L L CUSTOM  5362 5399 5436 5473 5510 5547 5584 5621
 vtxtable powerlevels 4
 vtxtable powervalues 14 27 30 34
 vtxtable powerlabels 25 1W 2W 3W
+
+# vtx frequency
+set vtx_freq = 5806
+
+# vtx serial port for IRC Tramp
+serial 0 8192 115200 57600 0 115200
