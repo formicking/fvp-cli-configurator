@@ -23,7 +23,7 @@ This is helper app for me and fellow FPV-builders
 8. Validate if changes formatted properly before comitting:
 
    ```bash
-   pylint src/ --disable=E0401,W0511,W0612,W0613,W0622
+   pylint src/ --disable=C0301,E0401,W0511,W0612,W0613,W0622
    black src/
    markdownlint -fix . -c .markdownlint.json
    ```

@@ -44,10 +44,10 @@ def parse_input(user_input):
     #     + "\n"
     # )
 
-    if "drop_servo" in (user_input.servo_settings()):
+    if "drop_servo" in user_input.servo_settings():
         results += f"Drop servo motor on pad {user_input.drop_servo_pad()}\n"
 
-    if "camera_servo" in (user_input.servo_settings()):
+    if "camera_servo" in user_input.servo_settings():
         results += f"Camera servo motor on pad {user_input.camera_servo_pad()}\n"
 
     print(results)
