@@ -1,4 +1,5 @@
 ### GEPRC Maten Pro V2 2.5W 72CH 5.8G IRC Tramp ###
+# vtxtable
 vtxtable bands 8
 vtxtable channels 8
 vtxtable band 1 BAND_A   A FACTORY  5865 5845 5825 5805 5785 5765 5745 5725
@@ -10,3 +11,9 @@ vtxtable band 6 BAND_H     FACTORY  5653 5693 5733 5773 5813 5853 5893 5933
 vtxtable band 7 BAND_L     FACTORY  5333 5373 5413 5453 5493 5533 5573 5613
 vtxtable band 8 BAND_U     FACTORY  5325 5348 5366 5384 5402 5420 5438 5456
 vtxtable powerlevels 5
+
+# vtx frequency
+set vtx_freq = 5806
+
+# vtx serial port for IRC Tramp
+serial 0 8192 115200 57600 0 115200

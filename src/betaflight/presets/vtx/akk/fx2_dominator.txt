@@ -1,4 +1,5 @@
 ### AKK FX2 Dominator 2W 40CH 5.8G SmartAudio ###
+# vtxtable
 vtxtable bands 5
 vtxtable channels 8
 vtxtable band 1 BOSCAM_A A FACTORY 5865 5845 5825 5805 5785 5765 5745 5725
@@ -9,3 +10,9 @@ vtxtable band 5 RACEBAND R FACTORY 5658 5695 5732 5769 5806 5843 5880 5917
 vtxtable powerlevels 4
 vtxtable powervalues 0 1 2 3
 vtxtable powerlabels 250 500 1000 2000
+
+# vtx frequency
+set vtx_freq = 5806
+
+# vtx serial port for SmartAudio
+serial 0 2048 115200 57600 0 115200

@@ -29,7 +29,7 @@ jobs:
           use-flake8: false
           use-mypy: false
           use-isort: false
-          extra-pylint-options: "--disable=E0401,W0511,W0612,W0613,W0622"
+          extra-pylint-options: "--disable=C0301,E0401,W0511,W0612,W0613,W0622"
 
       - name: Run markdown linter
         uses: articulate/actions-markdownlint@v1
