@@ -1,14 +1,7 @@
 """Backend module with all additional functions needed to support configurator app."""
 
-import json
 from pathlib import Path
-import ui_layout
-
-with open(Path(__file__).parent / "part_mapping.json", "r", encoding="utf-8") as f:
-    part_mapping = json.load(f)
-
-with open(Path(__file__).parent / "part_mapping.json", "r", encoding="utf-8") as f:
-    part_mapping = json.load(f)
+import settings
 
 
 def read_file(filename):
@@ -21,28 +14,24 @@ def parse_input(user_input):
     """Function for parsing user input from UI
     user_input contains user settings selected on frontend"""
 
-    results = f"Drone specification:\n \
-        Frame: {ui_layout.FRAME_CHOICES[user_input.frame_size()][user_input.frame()]} ({ui_layout.FRAME_SIZE_CHOICES[user_input.frame_size()]})\n \
-        Motors: {ui_layout.MOTOR_CHOICES[user_input.frame_size()][user_input.motor()]}\n \
-        Stack: {ui_layout.STACK_CHOICES[user_input.stack()]}\n \
-        VTX: {ui_layout.VTX_CHOICES[user_input.vtx()]}\n\n \
-    Settings:\n \
-        Stack settings: {user_input.stack_settings()}\n \
-        VTX settings: {user_input.vtx_settings()}\n \
-        Advanced settings: {user_input.additional_settings()}\n \
-        Betaflight version: {ui_layout.BETAFLIGHT_VERSION_CHOICES[user_input.betaflight_version()]}\n \
-        DSHOT configuration: {user_input.dshot()}\n \
-        RX UART: {user_input.rx_uart()}\n"
-    # todo: fix issue with OSD choice
-    # results += (
-    #     "OSD Style: "
-    #     + {
-    #         ui_layout.BETAFLIGH_CONFIGURATOR_CHOICES[user_input.betaflight_version()][
-    #             "OSD_CHOICES"
-    #         ][user_input.osd_options()]
-    #     }
-    #     + "\n"
-    # )
+    osd = settings.BETAFLIGHT_CONFIGURATOR_CHOICES[user_input.betaflight_version()][
+        "OSD_CHOICES"
+    ]
+    components = f"Drone specification:\n \
+    Frame: {settings.FRAME_CHOICES[user_input.frame_size()][user_input.frame()]} ({settings.FRAME_SIZE_CHOICES[user_input.frame_size()]})\n \
+    Motors: {settings.MOTOR_CHOICES[user_input.frame_size()][user_input.motor()]}\n \
+    Stack: {settings.STACK_CHOICES[user_input.stack()]}\n \
+    VTX: {settings.VTX_CHOICES[user_input.vtx()]}\n\n"
+    other_settings = f"Settings:\n \
+    Stack settings: {user_input.stack_settings()}\n \
+    VTX settings: {user_input.vtx_settings()}\n \
+    Advanced settings: {user_input.additional_settings()}\n \
+    Betaflight version: {settings.BETAFLIGHT_VERSION_CHOICES[user_input.betaflight_version()]}\n \
+    DSHOT configuration: {user_input.dshot()}\n \
+    RX UART: {user_input.rx_uart()}\n \
+    OSD Style: {osd[user_input.osd_options()]}\n\n"
+
+    results = components + other_settings
 
     if "drop_servo" in user_input.servo_settings():
         results += f"Drop servo motor on pad {user_input.drop_servo_pad()}\n"
@@ -59,7 +48,9 @@ def set_vtx_power(user_input):
     And generating dynamic configuration"""
     if "set_vtx_power" in user_input.vtx_settings():
         filepath = (
-            Path(__file__).parent / "betaflight" / part_mapping["VTX"][user_input.vtx()]
+            Path(__file__).parent
+            / "betaflight"
+            / settings.VTX_PATH_MAPPING[user_input.vtx()]
         )
         vtx_config = read_file(filepath).split("\n")
         max_level = [s for s in vtx_config if "vtxtable powerlevels" in s][0].split()[

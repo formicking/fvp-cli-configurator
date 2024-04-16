@@ -1,6 +1,7 @@
 """Defines UI layout"""
 
 from shiny import ui
+import settings
 
 # Icons
 # https://icons.getbootstrap.com/icons/question-circle-fill/
@@ -12,98 +13,7 @@ copy_button_icon = ui.HTML(
     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/></svg>'
 )
 
-# Choice mappings
-SERVO_PAD_CHOICES = {
-    "S9": "S9",
-    "M8": "M8",
-    "M7": "M7",
-    "M6": "M6",
-    "M5": "M5",
-    "M4": "M4",
-}
-UART_CHOICES = {"2": "UART 2", "6": "UART 6"}
-MOTOR_CHOICES = {
-    "S": {
-        "em2807": "Emax Eco II 2807 1300KV",
-        "fh2807": "Flashhobby 2807 1300KV",
-        "tm2806": "T-Motor F90 2806.5 1300KV",
-    },
-    "M": {"bh2810": "Brotherhobby Avenger 2810 900KV"},
-    "L": {
-        "xc3110": "XING2 Cinelifter 3110 1250KV",
-        "bh3212": "BrotherHobby Special Edition V4 32.5 12 95KV",
-    },
-}
-
-FRAME_SIZE_CHOICES = {"S": "7 inch", "M": "8 inch", "L": "10 inch"}
-FRAME_CHOICES = {
-    "S": {
-        "apex_hd": "Apex HD",
-        "source_one": "Source One",
-        "mark_4": "Mark 4",
-    },
-    "M": {
-        "apex_hd": "Apex HD",
-        "source_one": "Source One",
-        "mark_4": "Mark 4",
-    },
-    "L": {
-        "iflight_xl10": "iFlight Nazgul XL10 V6",
-        "axisflying_manta": "Axisflying MANTA10 Lite",
-    },
-}
-
-BETAFLIGH_CONFIGURATOR_CHOICES = {
-    "43": {
-        "OSD_CHOICES": {
-            "vd": "Victory Drones",
-            "none": "Default(No preset)",
-        }
-    },
-    "44": {
-        "OSD_CHOICES": {
-            "io": "Victory Drones(Ovcharyk Edition)",
-            "vd": "Victory Drones",
-            "none": "Default(No preset)",
-        }
-    },
-    "45": {
-        "OSD_CHOICES": {
-            "none": "Default(No preset)",
-        }
-    },
-}
-
-BETAFLIGHT_VERSION_CHOICES = {"43": "4.3", "44": "4.4", "45": "4.5"}
-
-STACK_CHOICES = {
-    "sbf403": "SpeedyBee F403",
-    "sbf404": "SpeedyBee F404",
-    "gif403": "Galychyna",
-    "vyriy": "Vyriy Drone + Q656 ESC",
-    "dmf722": "Diatone mamba F722",
-}
-
-VTX_CHOICES = {
-    "fre72": "Foxeer Reaper Extreme V2 2.5W 72CH 5.8G",
-    "fre40": "Foxeer Reaper Extreme 2.5W 40CH 5.8G",
-    "fri40": "Foxeer Reaper Infinity 5W 40CH 5.8G",
-    "rms48": "RushFPV MaxSolo 2.5W 48CH 5.8G",
-    "rts48": "RushFPV TankSolo 1.6W 48CH 5.8G",
-    "lts48": "ReadyToSky(LTS) 3W 48CH 5.8G",
-    "afd40": "AKK FX2 Dominator 2W 40CH 5.8G",
-    "aul40": "AKK Ultra Long Range 3W 40CH 5.8G",
-    "gmp72": "GEPRC Maten Pro V2 2.5W V2 72CH 5.8G",
-    "gmp40": "GEPRC Maten Pro 2.5W 40CH 5.8G",
-    "blw40": "BLITZ Whoop 2.5W 40CH 5.8G",
-}
-
-DSHOT_OPTIONS = {
-    "none": "None",
-    "d150": "D150",
-    "d300": "D300",
-    "d600": "D600",
-}
+# Result panel (right)
 card_results = ui.card(
     ui.card_header("Selection results"),
     ui.output_text_verbatim(
@@ -118,7 +28,7 @@ card_results = ui.card(
     full_screen=True,
 )
 
-# Cards layout
+# Input panel (left)
 card_inputs = ui.card(
     ui.card_header("Settings"),
     ui.row(
@@ -132,7 +42,7 @@ card_inputs = ui.card(
             ui.input_radio_buttons(
                 id="frame_size",
                 label="",
-                choices=FRAME_SIZE_CHOICES,
+                choices=settings.FRAME_SIZE_CHOICES,
                 inline=True,
                 # width="95%",
             ),
@@ -142,7 +52,7 @@ card_inputs = ui.card(
             ui.tooltip(
                 ui.span(tooltip_icon, " Servo motor settings:"),
                 "Select one or more servomotors and corresponding pads depending on your setup. \
-                    In most cases these applicable for bombers",
+                In most cases these applicable for bombers",
                 placement="right",
             ),
             ui.input_checkbox_group(
@@ -200,7 +110,7 @@ card_inputs = ui.card(
             ui.input_select(
                 id="dshot",
                 label="",
-                choices=DSHOT_OPTIONS,
+                choices=settings.DSHOT_OPTIONS,
                 # width="95%",
             ),
         ),
@@ -211,7 +121,7 @@ card_inputs = ui.card(
             ui.input_select(
                 id="stack",
                 label="Select Stack type:",
-                choices=STACK_CHOICES,
+                choices=settings.STACK_CHOICES,
                 # width="95%",
             ),
         ),
@@ -226,7 +136,7 @@ card_inputs = ui.card(
             ui.input_radio_buttons(
                 id="betaflight_version",
                 label="Betaflight version",
-                choices=BETAFLIGHT_VERSION_CHOICES,
+                choices=settings.BETAFLIGHT_VERSION_CHOICES,
                 inline=True,
                 # width="100%",
             ),
@@ -236,15 +146,15 @@ card_inputs = ui.card(
             ui.tooltip(
                 ui.span(tooltip_icon, " Stack settings:"),
                 "'Blackbox' migh not work properly at some stacks and should be used only if you need that. \
-                      'Apply default settings' will apply switch and adjustment ranges.",
+                'Apply default settings' will apply switch and adjustment ranges.",
                 placement="right",
             ),
             ui.input_checkbox_group(
                 id="stack_settings",
                 label="Stack settings:",
                 choices={
-                    "blackbox": ui.span("Enable blackbox"),
-                    "defaults": ui.span("Apply default settings"),
+                    "enable_blackbox": ui.span("Enable blackbox"),
+                    "apply_defaults": ui.span("Apply default settings"),
                 },
                 # width="95%",
             ),
@@ -256,7 +166,7 @@ card_inputs = ui.card(
             ui.input_select(
                 id="vtx",
                 label="Select VTX type:",
-                choices=VTX_CHOICES,
+                choices=settings.VTX_CHOICES,
                 # width="95%",
             ),
         ),
@@ -291,7 +201,7 @@ card_inputs = ui.card(
             ui.input_select(
                 id="rx_uart",
                 label="",
-                choices=UART_CHOICES,
+                choices=settings.UART_CHOICES,
                 # width="95%"
             ),
         ),
@@ -306,8 +216,8 @@ card_inputs = ui.card(
                 id="additional_settings",
                 label="",
                 choices={
-                    "set_pids": ui.span("Apply PIDs"),
-                    "set_filters": ui.span("Apply Filters"),
+                    "apply_pids": ui.span("Apply PIDs"),
+                    "apply_filters": ui.span("Apply Filters"),
                     "set_beeper": ui.span("Set beeper on Failsafe"),
                 },
                 # width="100%",
